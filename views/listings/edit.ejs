@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Listing | WonderLust</title>
+
+    <!-- Bootstrap CSS -->
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" 
+        rel="stylesheet"
+    >
+
+    <style>
+
+        body{
+            background-color: #f8f9fa;
+        }
+
+        .edit-card{
+            width: 100%;
+            max-width: 720px;
+            border-radius: 20px;
+        }
+
+        .form-control{
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .btn-custom{
+            border-radius: 12px;
+            padding: 12px;
+            font-weight: 600;
+        }
+
+        .current-img{
+            width: 250px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+
+        <div class="card shadow-lg border-0 p-4 edit-card">
+
+            <h2 class="text-center fw-bold mb-4">
+                Edit Your Listing
+            </h2>
+
+            <!-- enctype added for file upload -->
+            <form action="/listings/<%= listing._id %>?_method=PUT" method="POST" enctype="multipart/form-data" novalidate class="needs-validation">
+
+                <!-- Title -->
+                <div class="mb-3">
+
+                    <label for="title" class="form-label fw-semibold">
+                        Title
+                    </label>
+
+                    <input 
+                        type="text"
+                        id="title"
+                        name="listing[title]"
+                        value="<%= listing.title %>"
+                        class="form-control"
+                        placeholder="Enter listing title"
+                        required
+                    >
+                    <div class="valid-feedback">
+                        Title looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please enter a title.
+                    </div>
+
+                </div>
+
+                <!-- Description -->
+                <div class="mb-3">
+
+                    <label for="description" class="form-label fw-semibold">
+                        Description
+                    </label>
+
+                    <textarea 
+                        id="description"
+                        name="listing[description]"
+                        rows="4"
+                        class="form-control"
+                        placeholder="Write something about your listing..."
+                        required
+                    ><%= listing.description %></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please add a description.
+                    </div>
+
+                </div>
+
+                <!-- Current Image Preview -->
+                <div class="mb-3">
+
+                    <label class="form-label fw-semibold">
+                        Current Image
+                    </label>
+
+                    <br>
+
+                    <% if (listing.image && listing.image.url) { %>
+                        <img 
+                            src="<%= originalImageUrl %>" 
+                            alt="current listing image"
+                            class="current-img mb-2"
+                        >
+                    <% } else { %>
+                        <p class="text-muted">No image uploaded yet.</p>
+                    <% } %>
+
+                </div>
+
+                <!-- New Image Upload -->
+                <div class="mb-3">
+
+                    <label for="image" class="form-label fw-semibold">
+                        Update Image
+                    </label>
+
+                    <input 
+                        type="file"
+                        id="image"
+                        name="listing[image]"
+                        class="form-control"
+                        accept="image/*"
+                    >
+                    <div class="form-text text-muted">
+                        Leave empty to keep the current image.
+                    </div>
+
+                </div>
+
+                <!-- Price + Country -->
+                <div class="row">
+
+                    <!-- Price -->
+                    <div class="col-md-6 mb-3">
+
+                        <label for="price" class="form-label fw-semibold">
+                            Price
+                        </label>
+
+                        <input 
+                            type="number"
+                            id="price"
+                            name="listing[price]"
+                            value="<%= listing.price %>"
+                            class="form-control"
+                            placeholder="₹ Enter price"
+                            min="0"
+                            required
+                        >
+                        <div class="valid-feedback">
+                            Price looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Price should be valid.
+                        </div>
+
+                    </div>
+
+                    <!-- Country -->
+                    <div class="col-md-6 mb-3">
+
+                        <label for="country" class="form-label fw-semibold">
+                            Country
+                        </label>
+
+                        <input 
+                            type="text"
+                            id="country"
+                            name="listing[country]"
+                            value="<%= listing.country %>"
+                            class="form-control"
+                            placeholder="Enter country"
+                            required
+                        >
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter a country.
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Location -->
+                <div class="mb-4">
+
+                    <label for="location" class="form-label fw-semibold">
+                        Location
+                    </label>
+
+                    <input 
+                        type="text"
+                        id="location"
+                        name="listing[location]"
+                        value="<%= listing.location %>"
+                        class="form-control"
+                        placeholder="City / Area"
+                        required
+                    >
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please enter a location.
+                    </div>
+
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-grid gap-2">
+
+                    <button class="btn btn-dark btn-custom">
+                        Update Listing
+                    </button>
+
+                    <a href="/listings" class="btn btn-outline-secondary btn-custom">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="/js/script.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

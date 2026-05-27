@@ -1,0 +1,38 @@
+<%- layout('layouts/boilerplate') %>
+
+<div class="auth-container">
+  <div class="auth-left">
+    <div class="auth-logo">⬡ Wanderlust</div>
+    <p class="auth-tagline">Welcome back, explorer.</p>
+    <ul class="auth-perks">
+      <li>Pick up where you left off</li>
+      <li>Manage your listings & reviews</li>
+      <li>Discover new destinations today</li>
+    </ul>
+  </div>
+
+  <div class="auth-right">
+    <h2 class="auth-title">Sign in</h2>
+    <p class="auth-sub">New here? <a href="/signup">Create an account</a></p>
+
+    <% if (error && error.length) { %>
+      <div class="auth-alert"><%= error[0] %></div>
+    <% } %>
+
+    <% if (success && success.length) { %>
+      <div class="auth-success"><%= success[0] %></div>
+    <% } %>
+
+    <form action="/login" method="POST" novalidate>
+      <div class="auth-field">
+        <label>Username</label>
+        <input type="text" name="username" placeholder="alex123" required />
+      </div>
+      <div class="auth-field">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Your password" required />
+      </div>
+      <button type="submit" class="auth-btn">Sign in &rarr;</button>
+    </form>
+  </div>
+</div>

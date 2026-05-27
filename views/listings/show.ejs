@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title><%= listing.title %> | WanderLust</title>
+
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" 
+        rel="stylesheet"
+    >
+
+    <style>
+        body { background-color: #f8f9fa; }
+        .listing-card { width: 100%; max-width: 760px; border-radius: 20px; overflow: hidden; }
+        .listing-img { height: 420px; object-fit: cover; width: 100%; }
+        .btn-custom { border-radius: 12px; padding: 10px 18px; font-weight: 600; }
+        .info-text { font-size: 1.05rem; }
+        .review-box { background: white; border-radius: 16px; }
+        .review-card { border-radius: 14px; }
+    </style>
+</head>
+
+<body>
+
+    <div class="container d-flex justify-content-center py-5">
+        <div class="card shadow-lg border-0 listing-card">
+
+            <!-- ✅ Safety check for image -->
+            <% if (listing.image && listing.image.url) { %>
+                <img src="<%= listing.image.url %>" alt="listing image" class="listing-img">
+            <% } else { %>
+                <img 
+                    src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60" 
+                    alt="default image" 
+                    class="listing-img"
+                >
+            <% } %>
+
+            <div class="card-body p-4">
+
+                <h2 class="fw-bold mb-3"><%= listing.title %></h2>
+                <p class="text-muted info-text"><%= listing.description %></p>
+
+                <hr>
+
+                <div class="mb-4">
+                    <p class="info-text mb-2"><strong>Price:</strong> ₹ <%= listing.price %></p>
+                    <p class="info-text mb-2"><strong>Location:</strong> <%= listing.location %></p>
+                    <p class="info-text mb-2"><strong>Country:</strong> <%= listing.country %></p>
+                    <p class="info-text mb-2">
+                        <strong>Owner:</strong> <%= listing.owner ? listing.owner.username : "Unknown" %>
+                    </p>
+                </div>
+
+                <!-- ✅ Edit/Delete — only for listing owner -->
+                <% if (currUser && listing.owner && listing.owner.equals(currUser._id)) { %>
+                    <div class="d-flex gap-3 mb-4">
+                        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark btn-custom">
+                            Edit
+                        </a>
+                        <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+                            <button class="btn btn-danger btn-custom">Delete</button>
+                        </form>
+                    </div>
+                <% } %>
+
+                <hr>
+
+                <!-- ✅ Review form — only for logged-in users -->
+                <% if (currUser) { %>
+                    <div class="review-box p-4 shadow-sm">
+                        <h4 class="mb-4">Leave a Review</h4>
+                        <form 
+                            action="/listings/<%= listing._id %>/reviews" 
+                            method="POST"
+                            class="needs-validation"
+                            novalidate
+                        >
+                            <div class="mb-3">
+                                <label for="rating" class="form-label fw-semibold">Rating</label>
+                                <select name="review[rating]" id="rating" class="form-select" required>
+                                    <option value="">Select Rating</option>
+                                    <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
+                                    <option value="4">⭐⭐⭐⭐ - Very Good</option>
+                                    <option value="3">⭐⭐⭐ - Good</option>
+                                    <option value="2">⭐⭐ - Average</option>
+                                    <option value="1">⭐ - Poor</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a rating.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="comment" class="form-label fw-semibold">Comment</label>
+                                <textarea
+                                    name="review[comment]"
+                                    id="comment"
+                                    rows="4"
+                                    class="form-control"
+                                    placeholder="Share your experience..."
+                                    required
+                                ></textarea>
+                                <div class="invalid-feedback">Please enter a comment.</div>
+                            </div>
+
+                            <button class="btn btn-dark btn-custom">Submit Review</button>
+                        </form>
+                    </div>
+                <% } else { %>
+                    <div class="alert alert-secondary">
+                        <a href="/login">Log in</a> to leave a review.
+                    </div>
+                <% } %>
+
+                <hr class="my-4">
+
+                <h4 class="mb-4">All Reviews</h4>
+
+                <% if (listing.reviews.length > 0) { %>
+                    <% for (let review of listing.reviews) { %>
+                        <div class="card mb-3 shadow-sm border-0 review-card">
+                            <div class="card-body">
+
+                                <h5 class="card-title mb-2">Rating: <%= review.rating %> ⭐</h5>
+
+                                <p class="text-secondary mb-1" style="font-size: 0.9rem;">
+                                    By: <strong><%= review.author ? review.author.username : "Unknown" %></strong>
+                                </p>
+
+                                <p class="card-text text-muted mb-3"><%= review.comment %></p>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-secondary">Posted Recently</small>
+
+                                    <% if (currUser && review.author && review.author.equals(currUser._id)) { %>
+                                        <form
+                                            method="POST"
+                                            action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                                        >
+                                            <button class="btn btn-sm btn-danger">Delete Review</button>
+                                        </form>
+                                    <% } %>
+                                </div>
+
+                            </div>
+                        </div>
+                    <% } %>
+                <% } else { %>
+                    <p class="text-muted">No reviews yet.</p>
+                <% } %>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (() => {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach((form) => {
+                form.addEventListener('submit', (event) => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+
+</body>
+</html>

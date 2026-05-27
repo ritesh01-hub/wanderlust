@@ -1,0 +1,44 @@
+<%- layout('layouts/boilerplate') %>
+
+<div class="auth-container">
+  <div class="auth-left">
+    <div class="auth-logo">⬡ Wanderlust</div>
+    <p class="auth-tagline">Find your next <em>favourite</em> place to stay.</p>
+    <ul class="auth-perks">
+      <li>Browse thousands of unique listings</li>
+      <li>Leave reviews & build your travel history</li>
+      <li>Host your own property in minutes</li>
+    </ul>
+  </div>
+
+  <div class="auth-right">
+    <h2 class="auth-title">Create account</h2>
+    <p class="auth-sub">Already a member? <a href="/login">Sign in</a></p>
+
+    <% if (error && error.length) { %>
+      <div class="auth-alert"><%= error[0] %></div>
+    <% } %>
+
+    <form action="/signup" method="POST" novalidate>
+      <div class="auth-row">
+        <div class="auth-field">
+          <label>Username</label>
+          <input type="text" name="username" placeholder="alex123" required />
+        </div>
+        <div class="auth-field">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="alex@email.com" required />
+        </div>
+      </div>
+      <div class="auth-field">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Min. 8 characters" required />
+      </div>
+      <button type="submit" class="auth-btn">Create my account &rarr;</button>
+    </form>
+
+    <p class="auth-terms">
+      By signing up you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+    </p>
+  </div>
+</div>
