@@ -8,13 +8,13 @@ A full-stack Airbnb-style property listings web application where users can brow
 
 ## 🚀 Live Demo
 
-> ![Home Page](https://github.com/ritesh01-hub/wanderlust/blob/74ba707c188e2bc597f4776c15468516a537bf91/Screenshot%202026-05-28%20095332.png)
+> 
 
 ---
 
 ## 📸 Screenshots
 
-> _Add screenshots of your app here_
+>![Home Page](https://github.com/ritesh01-hub/wanderlust/blob/74ba707c188e2bc597f4776c15468516a537bf91/Screenshot%202026-05-28%20095332.png)
 
 ---
 
