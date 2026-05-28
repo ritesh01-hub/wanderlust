@@ -8,7 +8,7 @@ A full-stack Airbnb-style property listings web application where users can brow
 
 ## 🚀 Live Demo
 
-> [_Add your deployment link here (e.g., Render / Railway / Cyclic)_](https://wanderlust-fjo7.onrender.com)
+> (https://wanderlust-fjo7.onrender.com)
 
 ---
 
