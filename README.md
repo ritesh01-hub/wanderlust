@@ -4,6 +4,12 @@ A full-stack Airbnb-style property listings web application where users can brow
 
 > Built from scratch as a first full-stack project — zero to deploy.
 
+## 📖 About
+
+Wanderlust is a full-stack Airbnb-inspired property listings web application built with Node.js, Express, MongoDB, and EJS. Users can browse travel-friendly properties, create and manage their own listings, and leave ratings & reviews — all backed by a clean RESTful API and server-side validation.
+
+Built from scratch as a flagship full-stack project — covering MVC architecture, Mongoose schema design, nested routing, and Bootstrap-based responsive UI.
+
 ---
 
 ## 🚀 Live Demo
@@ -14,7 +20,7 @@ A full-stack Airbnb-style property listings web application where users can brow
 
 ## 📸 Screenshots
 
->![Home Page](https://github.com/ritesh01-hub/wanderlust/blob/74ba707c188e2bc597f4776c15468516a537bf91/Screenshot%202026-05-28%20095332.png)
+![Home Page](https://github.com/ritesh01-hub/wanderlust/blob/74ba707c188e2bc597f4776c15468516a537bf91/Screenshot%202026-05-28%20095332.png)
 
 ---
 
@@ -85,7 +91,7 @@ wanderlust/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/wanderlust.git
+git clone https://github.com/ritesh01-hub/wanderlust.git
 cd wanderlust
 
 # 2. Install dependencies
